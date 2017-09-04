@@ -110,6 +110,9 @@ def save_state(new_state):
 
 
 def main():
+    # disable warnings InsecurePlatformWarning
+    requests.packages.urllib3.disable_warnings()
+
     urls = sys.argv[1:]
     assert len(urls) > 0, 'Urls must be specified'
     print('Generating report for pages: {0}'.format(', '.join(urls)))

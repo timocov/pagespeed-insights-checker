@@ -6,7 +6,7 @@ import requests
 
 PAGESPEED_API_URL = 'https://www.googleapis.com/pagespeedonline/v2/runPagespeed'
 PAGESPEED_URL = 'https://developers.google.com/speed/pagespeed/insights/'
-SLACK_API_URL = 'https://hooks.slack.com/services/'
+SLACK_API_URL = 'https://hooks.slack.com/services'
 
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', None)
 SLACK_INCOMING_KEY = os.environ.get('SLACK_INCOMING_KEY', None)

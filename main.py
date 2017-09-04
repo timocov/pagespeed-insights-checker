@@ -72,8 +72,8 @@ def generate_pagespeed_slack_url(page_url):
 
 
 def generate_scores_slack_message(scores, changes):
-    desktop_str = ':computer: - *{desktop}*/100 ({desktop_change:+})'.format(**scores, **changes)
-    mobile_str = ':iphone: - *{mobile}*/100 ({mobile_change:+})'.format(**scores, **changes)
+    desktop_str = ':computer: - *{desktop}*/100 ({desktop_change:+})'.format(**dict(scores, **changes))
+    mobile_str = ':iphone: - *{mobile}*/100 ({mobile_change:+})'.format(**dict(scores, **changes))
     return '{0} {1}'.format(desktop_str, mobile_str)
 
 
@@ -134,7 +134,7 @@ def main():
 
             new_state[url] = scores
             page_report_str = generate_scores_slack_message(scores, changes)
-            print('  Desktop={desktop}/100 ({desktop_change:+}), mobile={mobile}/100 ({mobile_change:+})'.format(**scores, **changes))
+            print('  Desktop={desktop}/100 ({desktop_change:+}), mobile={mobile}/100 ({mobile_change:+})'.format(**dict(scores, **changes)))
         except WrongResponseCode as error:
             page_report_str = '`Page returns {0}` :bangbang:'.format(error.code)
             print('  Cannot generate report - page returns {0} code'.format(error.code))

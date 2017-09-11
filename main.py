@@ -138,6 +138,10 @@ def main():
             new_state[url] = scores
             page_report_str = generate_scores_slack_message(scores, changes)
             print('  Desktop={desktop}/100 ({desktop_change:+}), mobile={mobile}/100 ({mobile_change:+})'.format(**dict(scores, **changes)))
+
+            if abs(changes['desktop_change']) < 2 and abs(changes['mobile_change']) < 2:
+                print('  Changes of score for the page is in permissible variation')
+                continue
         except WrongResponseCode as error:
             page_report_str = '`Page returns {0}` :bangbang:'.format(error.code)
             print('  Cannot generate report - page returns {0} code'.format(error.code))

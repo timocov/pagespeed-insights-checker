@@ -72,9 +72,22 @@ def generate_pagespeed_slack_url(page_url):
 
 
 def generate_scores_slack_message(scores, changes):
-    desktop_str = ':computer: - *{desktop}*/100 ({desktop_change:+})'.format(**dict(scores, **changes))
-    mobile_str = ':iphone: - *{mobile}*/100 ({mobile_change:+})'.format(**dict(scores, **changes))
-    return '{0} {1}'.format(desktop_str, mobile_str)
+    import datetime
+    today = datetime.date.today()
+
+    tmpl_data = {}
+    tmpl_data.update(scores)
+    tmpl_data.update(changes)
+
+    parts = [
+        ':computer: *{desktop}*/100 ({desktop_change:+})'.format(**tmpl_data),
+        ':iphone: *{mobile}*/100 ({mobile_change:+})'.format(**tmpl_data),
+    ]
+
+    if today.month == 4 and today.day == 1:
+        parts.append(':potato: *?*/?')
+
+    return ', '.join(parts)
 
 
 def get_changes(prev_scores, new_scores):
@@ -149,7 +162,7 @@ def main():
 
         need_send_message_to_slack = True
         pagespeed_link = generate_pagespeed_slack_url(url)
-        slack_message_parts.append('{0} {1}'.format(pagespeed_link, page_report_str))
+        slack_message_parts.append('{0} {1}'.format(page_report_str, pagespeed_link))
 
     save_state(new_state)
     if need_send_message_to_slack:
